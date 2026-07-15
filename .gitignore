@@ -1,0 +1,30 @@
+# Rust / Cargo
+target/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.production
+frontend/*.tsbuildinfo
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+.vscode/
+.agents/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+.env.*.local
