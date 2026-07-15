@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StellarPass - Decentralized Event Ticketing on Stellar</title>
+    <meta name="description" content="Create events, mint verifiable tickets, transfer ownership, verify attendance with QR codes, and settle secondary market royalties on-chain with Soroban smart contracts." />
+    <meta name="theme-color" content="#ec4899" />
+
+    <!-- Preconnect to Google Fonts for Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Non-blocking font load: render with fallback fonts first, swap once Inter loads -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    </noscript>
+
+    <!-- SVG favicon: Stylized S/P logo mark -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%23ec4899%22/><text x=%2216%22 y=%2222%22 text-anchor=%22middle%22 font-size=%2218%22 font-family=%22system-ui%22 font-weight=%22700%22 fill=%22white%22>SP</text></svg>" />
+
+    <script>
+      // Prevent theme flicker on load — runs before React mounts
+      (function() {
+        var theme = window.localStorage.getItem('stellarpass-theme');
+        if (!theme) {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

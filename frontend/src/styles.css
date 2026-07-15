@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: #ffffff;
+  --color-bg-secondary: #fafafa;
+  --color-bg-tertiary: #f5f5f5;
+  --color-text: #18181b;
+  --color-text-secondary: #52525b;
+  --color-text-tertiary: #a1a1aa;
+  --color-border: #e4e4e7;
+  --color-border-hover: #d4d4d8;
+  --color-card: #ffffff;
+  --color-card-hover: #fafafa;
+  --color-brand: #ec4899;
+  --color-brand-hover: #db2777;
+  --color-accent: #8b5cf6;
+  --color-accent-hover: #7c3aed;
+  --color-brand-subtle: #fdf2f8;
+  --color-accent-subtle: #f5f3ff;
+  --color-success: #22c55e;
+  --color-success-subtle: #f0fdf4;
+  --color-warning: #f59e0b;
+  --color-warning-subtle: #fffbeb;
+  --color-error: #ef4444;
+  --color-error-subtle: #fef2f2;
+}
+
+.dark {
+  --color-bg: #0a0a0b;
+  --color-bg-secondary: #18181b;
+  --color-bg-tertiary: #27272a;
+  --color-text: #f4f4f5;
+  --color-text-secondary: #a1a1aa;
+  --color-text-tertiary: #71717a;
+  --color-border: #27272a;
+  --color-border-hover: #3f3f46;
+  --color-card: #18181b;
+  --color-card-hover: #1f1f23;
+  --color-brand: #f472b6;
+  --color-brand-hover: #ec4899;
+  --color-accent: #a78bfa;
+  --color-accent-hover: #c4b5fd;
+  --color-brand-subtle: #2d0a1e;
+  --color-accent-subtle: #1e1030;
+  --color-success: #4ade80;
+  --color-success-subtle: #052e16;
+  --color-warning: #fbbf24;
+  --color-warning-subtle: #451a03;
+  --color-error: #f87171;
+  --color-error-subtle: #450a0a;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Focus ring style */
+*:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-border-hover);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-brand-subtle);
+  color: var(--color-brand);
+}
+
+/* Smooth theme transitions for surface elements only */
+html a,
+html button,
+html input,
+html textarea,
+html select,
+html [class*="border-"],
+html [class*="bg-"] {
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .glass {
+  background: rgba(10, 10, 11, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtle border glow for active/premium states */
+.border-glow {
+  box-shadow: 0 0 0 1px rgba(236, 72, 153, 0.15), 0 0 16px rgba(236, 72, 153, 0.06);
+}
+
+.dark .border-glow {
+  box-shadow: 0 0 0 1px rgba(244, 114, 182, 0.2), 0 0 16px rgba(244, 114, 182, 0.08);
+}
