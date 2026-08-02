@@ -55,7 +55,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] text-[var(--color-text-secondary)] transition-all duration-200 hover:border-[var(--color-border-hover)] hover:text-[var(--color-text)] hover:shadow-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-brand)]"
+      className="relative flex h-9 w-9 items-center justify-center rounded border border-[var(--color-border)] bg-[var(--color-card)] text-[var(--color-text-secondary)] transition-all duration-200 hover:border-[var(--color-border-hover)] hover:text-[var(--color-text)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-brand)]"
       aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
     >
       {/* Sun icon */}
@@ -91,7 +91,7 @@ export function ThemeToggle() {
 
       {/* Glow ring on toggle */}
       <span
-        className={`absolute inset-0 rounded-xl transition-all duration-300 ${
+        className={`absolute inset-0 rounded transition-all duration-300 ${
           theme === 'dark' ? 'bg-[var(--color-accent-subtle)] opacity-20' : 'bg-amber-100 opacity-0'
         }`}
       />

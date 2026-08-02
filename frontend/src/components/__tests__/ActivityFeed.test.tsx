@@ -43,9 +43,9 @@ describe('ActivityFeed', () => {
     expect(txLink.closest('a')).toHaveAttribute('href', 'https://stellar.expert/explorer/testnet/tx/abc123def456');
   });
 
-  it('shows Simulated label', () => {
+  it('shows simulated events label', () => {
     render(<ActivityFeed items={mockItems} />);
-    expect(screen.getByText('Simulated')).toBeInTheDocument();
+    expect(screen.getByText('Simulated events')).toBeInTheDocument();
   });
 
   it('renders empty state gracefully when items array is empty', () => {

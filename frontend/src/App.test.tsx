@@ -34,20 +34,22 @@ describe('StellarPass routes', () => {
     walletMocks.checkWalletConnection.mockResolvedValue({ isConnected: false, publicKey: null, error: null });
   });
 
-  it('renders the landing page', () => {
+  it('renders the landing page', async () => {
     renderAt('/');
 
-    expect(screen.getByRole('heading', { name: /Decentralized event ticketing/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Explore Events' })).toHaveAttribute('href', '/events');
+    expect(await screen.findByRole('heading', { name: /Decentralized event ticketing/i })).toBeInTheDocument();
+    expect(await screen.findByRole('link', { name: 'Explore Events' })).toHaveAttribute('href', '/events');
   });
 
-  it('rejects an invalid ticket code before a wallet transaction is attempted', () => {
+  it('rejects an invalid ticket code before a wallet transaction is attempted', async () => {
     renderAt('/check-in');
 
-    fireEvent.change(screen.getByLabelText('Ticket Code'), { target: { value: 'not-a-ticket' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Confirm Gate Entry' }));
+    const input = await screen.findByLabelText('Ticket Code');
+    fireEvent.change(input, { target: { value: 'not-a-ticket' } });
 
-    expect(screen.getByText('Enter a valid StellarPass ticket code.')).toBeInTheDocument();
+    const button = await screen.findByRole('button', { name: 'Confirm Gate Entry' });
+    fireEvent.click(button);
+
+    expect(await screen.findByText('Enter a valid StellarPass ticket code.')).toBeInTheDocument();
   });
 });
-

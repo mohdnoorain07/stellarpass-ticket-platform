@@ -22,23 +22,23 @@ export function WalletPage() {
   }
 
   return (
-    <main className="py-16 px-6">
+    <main className="py-12 sm:py-16 px-4 sm:px-6">
       <div className="mx-auto max-w-lg">
-        <div className="text-center mb-10 animate-fade-in">
-          <h1 className="text-3xl font-bold text-[var(--color-text)]">Wallet</h1>
-          <p className="mt-2 text-sm text-[var(--color-text-secondary)]">
+        <div className="text-center mb-8 sm:mb-10 animate-fade-in">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[var(--color-text)] tracking-tight">Wallet</h1>
+          <p className="mt-1.5 sm:mt-2 text-sm text-[var(--color-text-secondary)]">
             Connect to Freighter to sign and verify transactions on Stellar Testnet.
           </p>
         </div>
 
         {/* Connection card */}
-        <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-8 shadow-elevated dark:shadow-dark-elevated animate-slide-up">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="card-altius animate-slide-up">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
             <div className="flex items-center gap-4">
               <span
                 className={`h-3 w-3 rounded-full transition-all duration-300 ${
                   wallet.isConnected
-                    ? 'bg-[var(--color-success)] shadow-sm shadow-[var(--color-success)]/40'
+                    ? 'bg-[var(--color-success)]'
                     : 'bg-[var(--color-text-tertiary)]'
                 }`}
               />
@@ -46,25 +46,24 @@ export function WalletPage() {
                 <p className="font-medium text-[var(--color-text)]">
                   {loading ? 'Checking...' : wallet.isConnected ? 'Connected to Freighter' : 'Disconnected'}
                 </p>
-                <p className="text-xs text-[var(--color-text-tertiary)]">Stellar Testnet</p>
+                <p className="text-xs text-[var(--color-text-tertiary)]">Stellar testnet</p>
               </div>
-            </div>
-            <button
+            </div>              <button
               onClick={handleConnect}
               disabled={loading}
-              className="w-full sm:w-auto rounded-xl bg-brand-gradient px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:shadow-md hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none"
+              className="btn-primary !px-5 !py-3 sm:!py-2.5 !text-sm w-full min-h-[44px]"
             >
               {loading ? 'Connecting...' : wallet.isConnected ? 'Reconnect' : 'Connect Wallet'}
             </button>
           </div>
 
           {wallet.publicKey && (
-            <div className="mt-6 rounded-xl bg-[var(--color-bg-secondary)] p-4 animate-slide-up">
+            <div className="mt-6 rounded bg-[var(--color-bg-secondary)] p-4 animate-slide-up border border-[var(--color-border)]">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)]">
-                  Public Key
+                <span className="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-tertiary)] font-mono">
+                  Public key
                 </span>
-                <span className="text-xs rounded-lg bg-[var(--color-success-subtle)] px-2 py-0.5 font-medium text-[var(--color-success)]">
+                <span className="text-xs rounded bg-[var(--color-success-subtle)] border border-[var(--color-success)]/30 px-2 py-0.5 font-medium text-[var(--color-success)]">
                   Active
                 </span>
               </div>
@@ -73,7 +72,7 @@ export function WalletPage() {
           )}
 
           {wallet.error && (
-            <div className="mt-6 rounded-xl bg-[var(--color-error-subtle)] p-4 animate-slide-up">
+            <div className="mt-6 rounded bg-[var(--color-error-subtle)] border border-[var(--color-error)]/30 p-4 animate-slide-up">
               <div className="flex gap-3 items-start">
                 <svg className="h-5 w-5 shrink-0 mt-0.5 text-[var(--color-error)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -88,8 +87,8 @@ export function WalletPage() {
         </div>
 
         {/* Requirements */}
-        <div className="mt-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 shadow-soft animate-slide-up" style={{ animationDelay: '100ms' }}>
-          <h3 className="text-sm font-semibold text-[var(--color-text)] mb-4">Requirements</h3>
+        <div className="mt-6 card-altius animate-slide-up" style={{ animationDelay: '100ms' }}>
+          <h3 className="text-sm font-semibold text-[var(--color-text)] mb-4 tracking-tight">Requirements</h3>
           <ul className="space-y-3 text-sm text-[var(--color-text-secondary)]">
             {[
               'Freighter Chrome extension installed and unlocked.',

@@ -1,7 +1,9 @@
 #![cfg_attr(not(test), no_std)]
 #![allow(clippy::needless_borrow)]
 
-use soroban_sdk::{contract, contracterror, contractimpl, contracttype, symbol_short, Address, Env, String};
+use soroban_sdk::{
+    contract, contracterror, contractimpl, contracttype, symbol_short, Address, Env, String,
+};
 
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -73,9 +75,12 @@ impl EventContract {
             sold_supply: 0,
         };
 
-        env.storage().persistent().set(&DataKey::Event(event_id), &event);
+        env.storage()
+            .persistent()
+            .set(&DataKey::Event(event_id), &event);
         storage.set(&DataKey::NextEventId, &(event_id + 1));
-        env.events().publish((symbol_short!("event"), event_id), event);
+        env.events()
+            .publish((symbol_short!("event"), event_id), event);
 
         Ok(event_id)
     }
@@ -101,8 +106,11 @@ impl EventContract {
 
         buyer.require_auth();
         event.sold_supply = event.sold_supply.checked_add(1).ok_or(Error::SoldOut)?;
-        env.storage().persistent().set(&DataKey::Event(event_id), &event);
-        env.events().publish((symbol_short!("reserved"), event_id), event.sold_supply);
+        env.storage()
+            .persistent()
+            .set(&DataKey::Event(event_id), &event);
+        env.events()
+            .publish((symbol_short!("reserved"), event_id), event.sold_supply);
         Ok(())
     }
 }
@@ -158,7 +166,12 @@ mod test {
         let buyer = Address::generate(&env);
         client.initialize(&organizer).unwrap();
         let event_id = client
-            .create_event(&organizer, &String::from_str(&env, "One seat"), &1u128, &1u32)
+            .create_event(
+                &organizer,
+                &String::from_str(&env, "One seat"),
+                &1u128,
+                &1u32,
+            )
             .unwrap();
 
         client.reserve_ticket(&event_id, &buyer).unwrap();

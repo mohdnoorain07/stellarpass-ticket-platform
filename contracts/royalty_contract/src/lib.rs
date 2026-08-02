@@ -107,8 +107,12 @@ impl RoyaltyContract {
 
     pub fn get_recipients(env: Env) -> Result<(Address, Address), Error> {
         let storage = env.storage().instance();
-        let creator = storage.get(&DataKey::Creator).ok_or(Error::NotInitialized)?;
-        let platform = storage.get(&DataKey::Platform).ok_or(Error::NotInitialized)?;
+        let creator = storage
+            .get(&DataKey::Creator)
+            .ok_or(Error::NotInitialized)?;
+        let platform = storage
+            .get(&DataKey::Platform)
+            .ok_or(Error::NotInitialized)?;
         Ok((creator, platform))
     }
 }
@@ -149,7 +153,10 @@ mod test {
         client
             .configure(&admin, &creator, &platform, &7_500u32, &2_500u32)
             .unwrap();
-        assert_eq!(client.get_recipients().unwrap(), (creator.clone(), platform.clone()));
+        assert_eq!(
+            client.get_recipients().unwrap(),
+            (creator.clone(), platform.clone())
+        );
 
         let error = client
             .configure(&admin, &creator, &platform, &7_500u32, &2_400u32)

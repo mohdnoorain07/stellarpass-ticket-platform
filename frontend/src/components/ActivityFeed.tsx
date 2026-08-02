@@ -12,22 +12,22 @@ interface ActivityFeedProps {
   items: FeedItem[];
 }
 
-const typeStyles: Record<string, { bg: string; label: string }> = {
-  checkin: { bg: 'bg-[var(--color-success-subtle)]', label: 'text-[var(--color-success)]' },
-  mint: { bg: 'bg-[var(--color-brand-subtle)]', label: 'text-[var(--color-brand)]' },
-  resale: { bg: 'bg-[var(--color-accent-subtle)]', label: 'text-[var(--color-accent)]' },
-  sold: { bg: 'bg-[var(--color-accent-subtle)]', label: 'text-[var(--color-accent)]' },
-  transfer: { bg: 'bg-[var(--color-accent-subtle)]', label: 'text-[var(--color-accent)]' },
-  xfer: { bg: 'bg-[var(--color-accent-subtle)]', label: 'text-[var(--color-accent)]' },
-  listed: { bg: 'bg-[var(--color-warning-subtle)]', label: 'text-[var(--color-warning)]' },
-  event: { bg: 'bg-[var(--color-brand-subtle)]', label: 'text-[var(--color-brand)]' },
+const typeStyles: Record<string, { bg: string; border: string; label: string }> = {
+  checkin: { bg: 'bg-[var(--color-success-subtle)]', border: 'border-[var(--color-success)]/30', label: 'text-[var(--color-success)]' },
+  mint: { bg: 'bg-[var(--color-brand-subtle)]', border: 'border-[var(--color-brand)]/30', label: 'text-[var(--color-brand)]' },
+  resale: { bg: 'bg-[var(--color-accent-subtle)]', border: 'border-[var(--color-accent)]/30', label: 'text-[var(--color-accent)]' },
+  sold: { bg: 'bg-[var(--color-accent-subtle)]', border: 'border-[var(--color-accent)]/30', label: 'text-[var(--color-accent)]' },
+  transfer: { bg: 'bg-[var(--color-accent-subtle)]', border: 'border-[var(--color-accent)]/30', label: 'text-[var(--color-accent)]' },
+  xfer: { bg: 'bg-[var(--color-accent-subtle)]', border: 'border-[var(--color-accent)]/30', label: 'text-[var(--color-accent)]' },
+  listed: { bg: 'bg-[var(--color-warning-subtle)]', border: 'border-[var(--color-warning)]/30', label: 'text-[var(--color-warning)]' },
+  event: { bg: 'bg-[var(--color-brand-subtle)]', border: 'border-[var(--color-brand)]/30', label: 'text-[var(--color-brand)]' },
 };
 
 export function ActivityFeed({ items }: ActivityFeedProps) {
   return (
-    <aside className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 shadow-elevated dark:shadow-dark-elevated h-fit max-h-[760px]">
+    <aside className="card-altius h-fit max-h-[760px]">
       <div className="mb-4">
-        <h3 className="text-sm font-semibold text-[var(--color-text)] flex items-center gap-2">
+        <h3 className="text-sm font-semibold text-[var(--color-text)] flex items-center gap-2 tracking-tight">
           <span className="h-2 w-2 rounded-full bg-[var(--color-brand)] animate-pulse-soft" />
           Network Activity
         </h3>
@@ -43,17 +43,17 @@ export function ActivityFeed({ items }: ActivityFeedProps) {
           <div className="w-full border-t border-[var(--color-border)]" />
         </div>
         <div className="relative flex justify-center">
-          <span className="bg-[var(--color-card)] px-2 text-[10px] text-[var(--color-text-tertiary)] font-medium uppercase tracking-wider">Simulated</span>
+          <span className="bg-[var(--color-card)] px-2 text-[10px] text-[var(--color-text-tertiary)] font-medium uppercase tracking-wider font-mono">Simulated events</span>
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto space-y-3 max-h-[320px] pr-1">
         {items.map((item) => {
-          const style = typeStyles[item.type] || { bg: 'bg-[var(--color-bg-tertiary)]', label: 'text-[var(--color-text-tertiary)]' };
+          const style = typeStyles[item.type] || { bg: 'bg-[var(--color-bg-tertiary)]', border: 'border-transparent', label: 'text-[var(--color-text-tertiary)]' };
           return (
             <div key={item.id} className="text-xs border-b border-[var(--color-border)] pb-3 last:border-b-0 last:pb-0">
               <div className="flex items-center justify-between text-[var(--color-text-tertiary)] mb-1.5">
-                <span className={`px-1.5 py-0.5 rounded text-[9px] font-semibold uppercase tracking-wider ${style.bg} ${style.label}`}>
+                <span className={`px-1.5 py-0.5 rounded text-[9px] font-semibold uppercase tracking-wider border ${style.bg} ${style.border} ${style.label}`}>
                   {item.type}
                 </span>
                 <span className="font-mono">{new Date(item.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>

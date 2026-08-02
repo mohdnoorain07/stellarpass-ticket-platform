@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://stellarpass.app/sitemap.xml

@@ -40,11 +40,11 @@ export function LiveActivity() {
     return (
       <div className="space-y-2">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="animate-pulse flex items-center gap-3 rounded-xl bg-[var(--color-bg-tertiary)] p-3.5">
-            <div className="h-4 w-14 rounded-lg bg-[var(--color-border)]" />
+          <div key={i} className="animate-pulse flex items-center gap-3 rounded bg-[var(--color-bg-tertiary)] p-3.5">
+            <div className="h-4 w-14 rounded bg-[var(--color-border)]" />
             <div className="flex-1 space-y-1.5">
-              <div className="h-3 w-3/4 rounded-lg bg-[var(--color-border)]" />
-              <div className="h-2 w-1/3 rounded-lg bg-[var(--color-border)]" />
+              <div className="h-3 w-3/4 rounded bg-[var(--color-border)]" />
+              <div className="h-2 w-1/3 rounded bg-[var(--color-border)]" />
             </div>
           </div>
         ))}
@@ -55,7 +55,7 @@ export function LiveActivity() {
   // Error state
   if (error) {
     return (
-      <div className="rounded-xl bg-[var(--color-warning-subtle)] p-4 text-center animate-fade-in">
+      <div className="rounded bg-[var(--color-warning-subtle)] border border-[var(--color-warning)]/30 p-4 text-center animate-fade-in">
         <p className="text-xs text-[var(--color-warning)]">{error}</p>
       </div>
     );
@@ -65,7 +65,7 @@ export function LiveActivity() {
   if (events.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-8 text-center animate-fade-in">
-        <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-bg-tertiary)]">
+        <div className="mb-3 flex h-10 w-10 items-center justify-center rounded bg-[var(--color-bg-tertiary)] border border-[var(--color-border)]">
           <svg className="h-5 w-5 text-[var(--color-text-tertiary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
@@ -82,10 +82,10 @@ export function LiveActivity() {
       {events.map((event) => (
         <li
           key={event.id}
-          className="group rounded-xl bg-[var(--color-bg-secondary)] p-3.5 transition-all duration-200 hover:bg-[var(--color-bg-tertiary)]"
+          className="group rounded bg-[var(--color-bg-secondary)] p-3.5 transition-all duration-200 hover:bg-[var(--color-bg-tertiary)] border border-[var(--color-border)]"
         >
           <div className="flex items-start justify-between gap-2 mb-2">
-            <span className="inline-flex items-center gap-1 rounded-lg bg-[var(--color-bg-tertiary)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-secondary)]">
+            <span className="inline-flex items-center gap-1 rounded bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-text-secondary)] font-mono">
               {event.action}
             </span>
             <span className="shrink-0 text-[10px] text-[var(--color-text-tertiary)] font-mono">
@@ -93,7 +93,7 @@ export function LiveActivity() {
             </span>
           </div>
           <div className="flex items-center justify-between gap-2">
-            <span className="text-xs text-[var(--color-text-tertiary)]">
+            <span className="text-xs text-[var(--color-text-tertiary)] font-mono">
               ledger <span className="font-mono text-[var(--color-text-secondary)]">{event.ledger}</span>
             </span>
             {event.transactionHash && (

@@ -2,66 +2,90 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  StellarPass Design System
+  Refined neutral palette. Vibrant orange accent. Clean, modern SaaS/Web3 aesthetic.
+*/
+
 :root {
-  --color-bg: #ffffff;
-  --color-bg-secondary: #fafafa;
-  --color-bg-tertiary: #f5f5f5;
-  --color-text: #18181b;
-  --color-text-secondary: #52525b;
-  --color-text-tertiary: #a1a1aa;
-  --color-border: #e4e4e7;
-  --color-border-hover: #d4d4d8;
+  /* Surfaces: clean light mode */
+  --color-bg: #f7f8fa;
+  --color-bg-secondary: #eef0f2;
+  --color-bg-tertiary: #e5e7eb;
   --color-card: #ffffff;
-  --color-card-hover: #fafafa;
-  --color-brand: #ec4899;
-  --color-brand-hover: #db2777;
-  --color-accent: #8b5cf6;
-  --color-accent-hover: #7c3aed;
-  --color-brand-subtle: #fdf2f8;
-  --color-accent-subtle: #f5f3ff;
+  --color-card-hover: #f7f8fa;
+
+  /* Text: neutral dark on light */
+  --color-text: #0f1115;
+  --color-text-secondary: #5a6577;
+  --color-text-tertiary: #9ca3af;
+
+  /* Borders */
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-border-hover: #ff6a3d;
+
+  /* Brand: Vibrant Orange accents */
+  --color-brand: #ff6a3d;
+  --color-brand-hover: #ff7e57;
+  --color-brand-subtle: #fff0eb;
+
+  /* Accent: Blockchain / Info */
+  --color-accent: #5bc0eb;
+  --color-accent-hover: #7ccdf0;
+  --color-accent-subtle: #eaf7fd;
+
+  /* Status colors */
   --color-success: #22c55e;
-  --color-success-subtle: #f0fdf4;
+  --color-success-subtle: #e6f7ed;
   --color-warning: #f59e0b;
-  --color-warning-subtle: #fffbeb;
+  --color-warning-subtle: #fef3c7;
   --color-error: #ef4444;
-  --color-error-subtle: #fef2f2;
+  --color-error-subtle: #fee2e2;
 }
 
+/* Dark Mode: Neutral near-black canvas */
 .dark {
-  --color-bg: #0a0a0b;
-  --color-bg-secondary: #18181b;
-  --color-bg-tertiary: #27272a;
-  --color-text: #f4f4f5;
-  --color-text-secondary: #a1a1aa;
-  --color-text-tertiary: #71717a;
-  --color-border: #27272a;
-  --color-border-hover: #3f3f46;
-  --color-card: #18181b;
-  --color-card-hover: #1f1f23;
-  --color-brand: #f472b6;
-  --color-brand-hover: #ec4899;
-  --color-accent: #a78bfa;
-  --color-accent-hover: #c4b5fd;
-  --color-brand-subtle: #2d0a1e;
-  --color-accent-subtle: #1e1030;
-  --color-success: #4ade80;
+  --color-bg: #0f1115;
+  --color-bg-secondary: #171a21;
+  --color-bg-tertiary: #1b1f27;
+  --color-card: #1b1f27;
+  --color-card-hover: #171a21;
+
+  --color-text: #ffffff;
+  --color-text-secondary: #b7bdc8;
+  --color-text-tertiary: #7e8794;
+
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: #ff6a3d;
+
+  --color-brand: #ff6a3d;
+  --color-brand-hover: #ff7e57;
+  --color-brand-subtle: #2a150e;
+
+  --color-accent: #5bc0eb;
+  --color-accent-hover: #7ccdf0;
+  --color-accent-subtle: #0e1f2a;
+
+  --color-success: #22c55e;
   --color-success-subtle: #052e16;
-  --color-warning: #fbbf24;
+  --color-warning: #f59e0b;
   --color-warning-subtle: #451a03;
-  --color-error: #f87171;
+  --color-error: #ef4444;
   --color-error-subtle: #450a0a;
 }
 
+/* Base */
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--color-bg);
   color: var(--color-text);
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica Neue, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 * {
@@ -69,14 +93,14 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Focus ring style */
+/* Focus ring: Vibrant Orange */
 *:focus-visible {
   outline: 2px solid var(--color-brand);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* Custom scrollbar */
+/* Scrollbar: subtle */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -87,57 +111,252 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--color-border);
+  background-color: var(--color-text-tertiary);
   border-radius: 3px;
+  opacity: 0.5;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-border-hover);
+  background-color: var(--color-brand);
 }
 
 /* Selection */
 ::selection {
-  background-color: var(--color-brand-subtle);
+  background-color: var(--color-brand);
+  color: #ffffff;
+}
+
+/* Primary Button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  background: linear-gradient(180deg, #ff6a3d, #e55a2b);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 0 1px rgba(255, 106, 61, 0.3);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(180deg, #ff7e57, #ff6a3d);
+  transform: scale(1.01);
+}
+
+.btn-primary:active {
+  transform: scale(0.99);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Outlined Ghost Button */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: scale(1.01);
+}
+
+.btn-ghost:active {
+  transform: scale(0.99);
+}
+
+.btn-ghost:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Outlined Action (Vibrant Orange) */
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ff6a3d;
+  background: transparent;
+  border: 1px solid #ff6a3d;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.btn-action:hover {
+  background: rgba(255, 106, 61, 0.08);
+  transform: scale(1.01);
+}
+
+.btn-action:active {
+  transform: scale(0.99);
+}
+
+/* Card */
+.card-altius {
+  border-radius: 8px;
+  padding: 32px;
+  transition: all 0.3s ease;
+}
+
+/* Light mode card */
+:root .card-altius {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+:root .card-altius:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* Dark mode card */
+.dark .card-altius {
+  background: #1b1f27;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dark .card-altius:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Typography Utilities */
+.text-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
   color: var(--color-brand);
 }
 
-/* Smooth theme transitions for surface elements only */
-html a,
-html button,
-html input,
-html textarea,
-html select,
-html [class*="border-"],
-html [class*="bg-"] {
-  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+.text-display {
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -2.58px;
 }
 
-/* Glassmorphism utility */
-.glass {
+.text-heading {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.13;
+  letter-spacing: -1.92px;
+}
+
+/* Hero Gradient Bars */
+.hero-bar {
+  width: 60px;
+  height: 240px;
+  background: #ff6a3d;
+  border-radius: 2px 2px 0 0;
+  transition: all 0.3s ease;
+}
+
+/* Glass utility */
+.glass-altius {
+  background: rgba(23, 26, 33, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+:root .glass-altius {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
-.dark .glass {
-  background: rgba(10, 10, 11, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
-/* Gradient text utility */
-.gradient-text {
-  background: linear-gradient(135deg, #ec4899, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Smooth transitions for theme switching (specific properties only) */
+html a,
+html button,
+html input,
+html textarea,
+html select {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-/* Subtle border glow for active/premium states */
-.border-glow {
-  box-shadow: 0 0 0 1px rgba(236, 72, 153, 0.15), 0 0 16px rgba(236, 72, 153, 0.06);
+/* Responsive typography scaling */
+@media (max-width: 640px) {
+  :root .text-display,
+  :root h1.text-heading {
+    font-size: 36px;
+    line-height: 1.1;
+    letter-spacing: -1.44px;
+  }
+  :root .text-heading {
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -1.28px;
+  }
 }
 
-.dark .border-glow {
-  box-shadow: 0 0 0 1px rgba(244, 114, 182, 0.2), 0 0 16px rgba(244, 114, 182, 0.08);
+/* Mobile-friendly tap targets */
+@media (max-width: 640px) {
+  body button, 
+  body a,
+  body .btn-primary,
+  body .btn-ghost,
+  body .btn-action,
+  body [role="button"],
+  body select,
+  body input[type="submit"],
+  body input[type="button"] {
+    min-height: 44px;
+  }
+
+  /* Reduce overall padding on mobile */
+  body .card-altius {
+    padding: 20px;
+  }
+
+  /* Improve touch-friendly spacing on mobile */
+  body input,
+  body textarea,
+  body select {
+    font-size: 16px; /* Prevent iOS zoom on focus */
+  }
+
+  /* Prevent horizontal overflow */
+  body main {
+    overflow-x: hidden;
+  }
 }

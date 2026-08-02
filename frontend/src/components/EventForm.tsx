@@ -37,7 +37,7 @@ function Input({ value, onChange, placeholder, type, min }: {
     <input
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] outline-none transition-all duration-200 placeholder:text-[var(--color-text-tertiary)] focus:border-[var(--color-brand)] focus:ring-1 focus:ring-[var(--color-brand)]"
+      className="w-full rounded border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] outline-none transition-all duration-200 placeholder:text-[var(--color-text-tertiary)] focus:border-[var(--color-brand)] focus:ring-1 focus:ring-[var(--color-brand)]"
       placeholder={placeholder}
       type={type || 'text'}
       min={min}
@@ -48,8 +48,8 @@ function Input({ value, onChange, placeholder, type, min }: {
 export function EventForm({ form, onChange, isSubmitting, onSubmit }: EventFormProps) {
   return (
     <section className="max-w-xl mx-auto animate-slide-up">
-      <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-8 shadow-elevated dark:shadow-dark-elevated">
-        <h2 className="text-xl font-semibold text-[var(--color-text)]">Host New Event</h2>
+      <div className="card-altius">
+        <h2 className="text-xl font-semibold text-[var(--color-text)] tracking-tight">Host New Event</h2>
         <p className="mt-1.5 text-sm text-[var(--color-text-secondary)] leading-relaxed">
           Create a local draft or publish on-chain to Stellar testnet.
         </p>
@@ -88,7 +88,7 @@ export function EventForm({ form, onChange, isSubmitting, onSubmit }: EventFormP
           </label>
 
           {form.createOnChain && (
-            <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-brand-subtle)]/30 p-4 grid grid-cols-2 gap-4 animate-slide-down">
+            <div className="rounded border border-[var(--color-border)] bg-[var(--color-brand-subtle)]/20 p-4 grid grid-cols-2 gap-4 animate-slide-down">
               <div>
                 <label className="block text-xs font-medium text-[var(--color-text-tertiary)] mb-1.5">Creator Royalty (bps)</label>
                 <Input value={form.creatorShareBps} onChange={(v) => onChange('creatorShareBps', v)} type="number" />
@@ -106,7 +106,7 @@ export function EventForm({ form, onChange, isSubmitting, onSubmit }: EventFormP
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-xl bg-brand-gradient px-4 py-3 text-sm font-semibold text-white transition-all duration-200 hover:shadow-md hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none"
+            className="btn-primary w-full !text-sm !py-3"
           >
             {isSubmitting ? 'Publishing...' : form.createOnChain ? 'Publish Event' : 'Create Local Draft'}
           </button>

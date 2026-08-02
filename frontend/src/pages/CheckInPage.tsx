@@ -115,31 +115,31 @@ export function CheckInPage() {
   }
 
   return (
-    <main className="py-16 px-6">
+    <main className="py-12 sm:py-16 px-4 sm:px-6">
       <div className="mx-auto max-w-lg">
-        <div className="text-center mb-10 animate-fade-in">
-          <h1 className="text-3xl font-bold text-[var(--color-text)]">Gate Check-in</h1>
-          <p className="mt-2 text-sm text-[var(--color-text-secondary)]">
+        <div className="text-center mb-8 sm:mb-10 animate-fade-in">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[var(--color-text)] tracking-tight">Gate Check-in</h1>
+          <p className="mt-1.5 sm:mt-2 text-sm text-[var(--color-text-secondary)]">
             Scan a ticket QR code or paste the code to verify entry on-chain.
           </p>
         </div>
 
-        <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-8 shadow-elevated dark:shadow-dark-elevated animate-slide-up">
+        <div className="card-altius animate-slide-up">
           {/* Admin warning */}
-          <div className="mb-6 flex items-start gap-3 rounded-xl bg-[var(--color-warning-subtle)] p-4 text-sm animate-slide-down">
+          <div className="mb-6 flex items-start gap-3 rounded bg-[var(--color-warning-subtle)] border border-[var(--color-warning)]/30 p-4 text-sm animate-slide-down">
             <svg className="h-5 w-5 shrink-0 mt-0.5 text-[var(--color-warning)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
             </svg>
             <div>
               <p className="font-medium text-[var(--color-warning)]">Admin-Only Action</p>
               <p className="mt-1 text-xs text-[var(--color-warning)]/80">
-                Only the configured ticket-contract administrator can check in tickets.
+                Only the ticket contract administrator can verify tickets.
               </p>
             </div>
           </div>
 
           {/* Camera preview */}
-          <div className="overflow-hidden rounded-xl bg-[var(--color-bg-secondary)] aspect-video relative flex items-center justify-center border border-[var(--color-border)]">
+          <div className="overflow-hidden rounded bg-[var(--color-bg-secondary)] aspect-video relative flex items-center justify-center border border-[var(--color-border)]">
             {!isScanning && (
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
                 <svg className="h-10 w-10 text-[var(--color-text-tertiary)] mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -155,7 +155,7 @@ export function CheckInPage() {
           <button
             type="button"
             onClick={() => void (isScanning ? stopScanner() : startScanner())}
-            className="mt-4 w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] px-4 py-2.5 text-sm font-medium text-[var(--color-text)] transition-all duration-200 hover:border-[var(--color-border-hover)] hover:shadow-soft active:scale-[0.98]"
+            className="mt-4 w-full rounded border border-[var(--color-border)] bg-[var(--color-card)] px-4 py-2.5 text-sm font-medium text-[var(--color-text)] transition-all duration-200 hover:border-[var(--color-border-hover)] active:scale-[0.98]"
           >
             {isScanning ? 'Stop Scanner' : 'Scan QR Code'}
           </button>
@@ -169,21 +169,21 @@ export function CheckInPage() {
                 id="ticket-code"
                 value={ticketCode}
                 onChange={(e) => setTicketCode(e.target.value)}
-                className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] outline-none transition-all duration-200 placeholder:text-[var(--color-text-tertiary)] focus:border-[var(--color-brand)] focus:ring-1 focus:ring-[var(--color-brand)]"
+                className="w-full rounded border border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-2.5 text-sm text-[var(--color-text)] outline-none transition-all duration-200 placeholder:text-[var(--color-text-tertiary)] focus:border-[var(--color-brand)] focus:ring-1 focus:ring-[var(--color-brand)] font-mono"
                 placeholder="stellarpass:ticket:42"
               />
             </div>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full rounded-xl bg-brand-gradient px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:shadow-md hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none"
+              className="btn-primary w-full !text-sm !py-2.5"
             >
               {isSubmitting ? 'Verifying...' : 'Confirm Gate Entry'}
             </button>
           </form>
 
           {message && (
-            <div className="mt-5 rounded-xl bg-[var(--color-brand-subtle)] px-4 py-3.5 text-sm text-[var(--color-brand)] animate-slide-up">
+            <div className="mt-5 rounded bg-[var(--color-brand-subtle)] border border-[var(--color-brand)]/30 px-4 py-3.5 text-sm text-[var(--color-brand)] animate-slide-up">
               {message}
             </div>
           )}

@@ -28,8 +28,8 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--color-bg)] px-6 py-12">
           <div className="w-full max-w-md animate-scale-in">
-            <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-8 shadow-elevated dark:shadow-dark-elevated">
-              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--color-error-subtle)]">
+            <div className="card-altius">
+              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded bg-[var(--color-error-subtle)]">
                 <svg className="h-7 w-7 text-[var(--color-error)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
                 </svg>
@@ -39,13 +39,13 @@ export class ErrorBoundary extends Component<Props, State> {
                 An unexpected error occurred in the StellarPass application. Please try reloading the page.
               </p>
               {this.state.error && (
-                <div className="mt-4 overflow-x-auto rounded-xl bg-[var(--color-bg-tertiary)] p-4 text-xs font-mono text-[var(--color-error)] border border-[var(--color-border)]">
+                <div className="mt-4 overflow-x-auto rounded bg-[var(--color-bg-tertiary)] p-4 text-xs font-mono text-[var(--color-error)] border border-[var(--color-border)]">
                   {this.state.error.toString()}
                 </div>
               )}
               <button
                 onClick={() => window.location.reload()}
-                className="mt-6 w-full rounded-xl bg-brand-gradient px-4 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-brand-gradient-hover hover:shadow-md hover:scale-[1.01] active:scale-[0.99]"
+                className="btn-primary mt-6 w-full"
               >
                 Reload application
               </button>

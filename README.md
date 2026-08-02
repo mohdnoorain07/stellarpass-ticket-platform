@@ -2,17 +2,17 @@
 
 > **Decentralized event ticketing on the Stellar network using Soroban smart contracts.**
 
-Create events, mint verifiable tickets, transfer ownership, check in with QR codes, and settle secondary market royalties — all on-chain.
+Create events, mint verifiable tickets, transfer ownership, check in with QR codes, and settle secondary market royalties on-chain.
 
 ## Features
 
-- **Event Registry** — Deploy events on Stellar with full on-chain transparency
-- **Smart Tickets** — Mint tokenized passes as verifiable, transferable tickets
-- **Royalty Engine** — Automatic royalty distribution on secondary market resales
-- **QR Check-in** — Gate verification via QR scanning with on-chain validation
-- **Wallet Integration** — Freighter wallet for signing Soroban transactions
-- **Real-time Updates** — Live contract event streaming from Soroban RPC
-- **Dark/Light Theme** — Full theme support with system preference detection
+- **Event Registry** - Deploy events on Stellar with full on-chain transparency
+- **Smart Tickets** - Mint tokenized passes as verifiable, transferable tickets
+- **Royalty Engine** - Automatic royalty distribution on secondary market resales
+- **QR Check-in** - Gate verification via QR scanning with on-chain validation
+- **Wallet Integration** - Freighter wallet for signing Soroban transactions
+- **Real-time Updates** - Live contract event streaming from Soroban RPC
+- **Dark/Light Theme** - Full theme support with system preference detection
 
 ## Architecture
 
@@ -41,19 +41,19 @@ The TicketContract calls the RoyaltyContract during every resale settlement, and
 
 ```
 stellarpass/
-├── contracts/
-│   ├── event_contract/     # Event registry contract
-│   ├── ticket_contract/    # Ticket lifecycle contract
-│   └── royalty_contract/   # Royalty distribution contract
-├── frontend/
-│   └── src/
-│       ├── components/     # Reusable UI components
-│       ├── pages/          # Route pages
-│       ├── lib/            # Wallet, contracts, events, theme
-│       └── data/           # Starter data
-├── docs/                   # Architecture, deployment, demo guides
-├── .github/workflows/      # CI/CD pipeline
-└── deploy.sh               # Build WASM artifacts
+  contracts/
+    event_contract/     Event registry contract
+    ticket_contract/    Ticket lifecycle contract
+    royalty_contract/   Royalty distribution contract
+  frontend/
+    src/
+      components/       Reusable UI components
+      pages/            Route pages
+      lib/              Wallet, contracts, events, theme
+      data/             Starter data
+  docs/                 Architecture, deployment, demo guides
+  .github/workflows/    CI/CD pipeline
+  deploy.sh             Build WASM artifacts
 ```
 
 ## Getting Started

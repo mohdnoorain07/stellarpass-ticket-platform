@@ -1,7 +1,10 @@
 #![cfg_attr(not(test), no_std)]
 #![allow(clippy::needless_borrow)]
 
-use soroban_sdk::{contract, contracterror, contractimpl, contracttype, symbol_short, token, Address, Env, IntoVal, String, Symbol};
+use soroban_sdk::{
+    contract, contracterror, contractimpl, contracttype, symbol_short, token, Address, Env,
+    IntoVal, String, Symbol,
+};
 
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -102,9 +105,12 @@ impl TicketContract {
             metadata,
         };
 
-        env.storage().persistent().set(&DataKey::Ticket(ticket_id), &ticket);
+        env.storage()
+            .persistent()
+            .set(&DataKey::Ticket(ticket_id), &ticket);
         storage.set(&DataKey::NextTicketId, &(ticket_id + 1));
-        env.events().publish((symbol_short!("mint"), ticket_id), ticket);
+        env.events()
+            .publish((symbol_short!("mint"), ticket_id), ticket);
 
         Ok(ticket_id)
     }
@@ -133,8 +139,11 @@ impl TicketContract {
 
         caller.require_auth();
         ticket.used = true;
-        env.storage().persistent().set(&DataKey::Ticket(ticket_id), &ticket);
-        env.events().publish((symbol_short!("used"), ticket_id), ticket);
+        env.storage()
+            .persistent()
+            .set(&DataKey::Ticket(ticket_id), &ticket);
+        env.events()
+            .publish((symbol_short!("used"), ticket_id), ticket);
 
         Ok(())
     }
@@ -162,9 +171,14 @@ impl TicketContract {
         current_owner.require_auth();
         new_owner.require_auth();
         ticket.owner = new_owner;
-        env.storage().persistent().set(&DataKey::Ticket(ticket_id), &ticket);
-        env.storage().persistent().remove(&DataKey::Listing(ticket_id));
-        env.events().publish((symbol_short!("xfer"), ticket_id), ticket);
+        env.storage()
+            .persistent()
+            .set(&DataKey::Ticket(ticket_id), &ticket);
+        env.storage()
+            .persistent()
+            .remove(&DataKey::Listing(ticket_id));
+        env.events()
+            .publish((symbol_short!("xfer"), ticket_id), ticket);
 
         Ok(())
     }
@@ -201,8 +215,11 @@ impl TicketContract {
 
         admin.require_auth();
         ticket.used = true;
-        env.storage().persistent().set(&DataKey::Ticket(ticket_id), &ticket);
-        env.events().publish((symbol_short!("checkin"), ticket_id), ticket);
+        env.storage()
+            .persistent()
+            .set(&DataKey::Ticket(ticket_id), &ticket);
+        env.events()
+            .publish((symbol_short!("checkin"), ticket_id), ticket);
         Ok(())
     }
 
@@ -268,9 +285,12 @@ impl TicketContract {
             used: false,
             metadata,
         };
-        env.storage().persistent().set(&DataKey::Ticket(ticket_id), &ticket);
+        env.storage()
+            .persistent()
+            .set(&DataKey::Ticket(ticket_id), &ticket);
         storage.set(&DataKey::NextTicketId, &(ticket_id + 1));
-        env.events().publish((symbol_short!("primary"), ticket_id), ticket);
+        env.events()
+            .publish((symbol_short!("primary"), ticket_id), ticket);
         Ok(ticket_id)
     }
 
@@ -305,14 +325,19 @@ impl TicketContract {
             &DataKey::Listing(ticket_id),
             &ResaleListing { seller, sale_price },
         );
-        env.events().publish((symbol_short!("listed"), ticket_id), sale_price);
+        env.events()
+            .publish((symbol_short!("listed"), ticket_id), sale_price);
         Ok(())
     }
 
     /// Buyer-authorized purchase for an existing listing. Token transfers,
     /// royalty distribution, listing removal, and ownership transfer are one
     /// Soroban transaction, so partial settlement cannot occur.
-    pub fn buy_listed_ticket(env: Env, ticket_id: u32, buyer: Address) -> Result<(u128, u128), Error> {
+    pub fn buy_listed_ticket(
+        env: Env,
+        ticket_id: u32,
+        buyer: Address,
+    ) -> Result<(u128, u128), Error> {
         let mut ticket: Ticket = env
             .storage()
             .persistent()
@@ -334,16 +359,17 @@ impl TicketContract {
         }
 
         buyer.require_auth();
-        let royalties = Self::settle_resale_payment(
-            &env,
-            &listing.seller,
-            &buyer,
-            listing.sale_price,
-        )?;
+        let royalties =
+            Self::settle_resale_payment(&env, &listing.seller, &buyer, listing.sale_price)?;
         ticket.owner = buyer;
-        env.storage().persistent().set(&DataKey::Ticket(ticket_id), &ticket);
-        env.storage().persistent().remove(&DataKey::Listing(ticket_id));
-        env.events().publish((symbol_short!("sold"), ticket_id), ticket);
+        env.storage()
+            .persistent()
+            .set(&DataKey::Ticket(ticket_id), &ticket);
+        env.storage()
+            .persistent()
+            .remove(&DataKey::Listing(ticket_id));
+        env.events()
+            .publish((symbol_short!("sold"), ticket_id), ticket);
         Ok(royalties)
     }
 
@@ -387,7 +413,9 @@ impl TicketContract {
         let royalties = Self::settle_resale_payment(&env, &seller, &buyer, sale_price)?;
 
         ticket.owner = buyer;
-        env.storage().persistent().set(&DataKey::Ticket(ticket_id), &ticket);
+        env.storage()
+            .persistent()
+            .set(&DataKey::Ticket(ticket_id), &ticket);
 
         Ok(royalties)
     }
@@ -518,7 +546,12 @@ mod test {
         let owner = Address::generate(&env);
         client.initialize(&admin).unwrap();
         let ticket_id = client
-            .mint_ticket(&admin, &10u32, &owner, &String::from_str(&env, "Gate ticket"))
+            .mint_ticket(
+                &admin,
+                &10u32,
+                &owner,
+                &String::from_str(&env, "Gate ticket"),
+            )
             .unwrap();
 
         client.check_in_ticket(&ticket_id, &admin).unwrap();
@@ -545,7 +578,9 @@ mod test {
             .mint_ticket(&admin, &12u32, &owner, &metadata)
             .unwrap();
 
-        client.transfer_ticket(&ticket_id, &owner, &new_owner).unwrap();
+        client
+            .transfer_ticket(&ticket_id, &owner, &new_owner)
+            .unwrap();
         let ticket = client.get_ticket(&ticket_id).unwrap();
         assert_eq!(ticket.owner, new_owner);
     }
@@ -569,7 +604,9 @@ mod test {
             .unwrap();
 
         client.use_ticket(&ticket_id, &owner).unwrap();
-        let error = client.transfer_ticket(&ticket_id, &owner, &new_owner).unwrap_err();
+        let error = client
+            .transfer_ticket(&ticket_id, &owner, &new_owner)
+            .unwrap_err();
         assert_eq!(error, Error::TicketUsed);
     }
 
@@ -594,7 +631,9 @@ mod test {
         royalty_client
             .configure(&admin, &creator, &platform, &8000u32, &2000u32)
             .unwrap();
-        ticket_client.set_royalty_contract(&royalty_contract_id).unwrap();
+        ticket_client
+            .set_royalty_contract(&royalty_contract_id)
+            .unwrap();
         let payment_token_id = env.register_stellar_asset_contract(admin.clone());
         let payment_token = token::StellarAssetClient::new(&env, &payment_token_id);
         payment_token.mint(&buyer, &1000i128);
@@ -608,9 +647,8 @@ mod test {
         ticket_client
             .list_for_resale(&ticket_id, &seller, &1000u128)
             .unwrap();
-        let (creator_amount, platform_amount) = ticket_client
-            .buy_listed_ticket(&ticket_id, &buyer)
-            .unwrap();
+        let (creator_amount, platform_amount) =
+            ticket_client.buy_listed_ticket(&ticket_id, &buyer).unwrap();
 
         let ticket = ticket_client.get_ticket(&ticket_id).unwrap();
         assert_eq!(ticket.owner, buyer);

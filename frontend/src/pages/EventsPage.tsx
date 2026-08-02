@@ -274,7 +274,7 @@ export function EventsPage() {
         contractId: getTicketContractId(),
         method: 'transfer_ticket',
         args: [
-          { type: 'native', value: ticket.id },
+          { type: 'u32', value: ticket.id },
           { type: 'address', value: wallet.publicKey },
           { type: 'address', value: recipient },
         ],
@@ -397,20 +397,19 @@ export function EventsPage() {
   }
 
   return (
-    <main className="py-12 px-6">
+    <main className="py-8 sm:py-12 px-4 sm:px-6">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
-        <div className="mb-10 animate-fade-in">
-          <h1 className="text-3xl font-bold text-[var(--color-text)]">Events</h1>
-          <p className="mt-2 text-sm text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
-            Browse events, mint tickets, transfer ownership, or list them for secondary resale. All actions are verified via Soroban on Stellar testnet.
+        <div className="mb-6 sm:mb-10 animate-fade-in">
+          <h1 className="text-2xl sm:text-3xl font-bold text-[var(--color-text)] tracking-tight">Events</h1>            <p className="mt-1.5 sm:mt-2 text-sm text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
+            Browse events, mint tickets, transfer ownership, or list them for resale. All actions verified via Soroban on Stellar testnet.
           </p>
         </div>
 
         {/* Status bar */}
-        <div className="mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-5 shadow-soft animate-slide-up">
+        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 rounded-[8px] border border-[var(--color-border)] bg-[var(--color-card)] p-4 sm:p-5">
           <div className="flex items-center gap-3">
-            <span className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${wallet.isConnected ? 'bg-[var(--color-success)] shadow-sm shadow-[var(--color-success)]/30' : 'bg-[var(--color-text-tertiary)]'}`} />
+            <span className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${wallet.isConnected ? 'bg-[var(--color-success)]' : 'bg-[var(--color-text-tertiary)]'}`} />
             <div>
               <p className="text-sm font-medium text-[var(--color-text)]">
                 {wallet.isConnected ? 'Freighter Connected' : 'Not Connected'}
@@ -421,14 +420,14 @@ export function EventsPage() {
             </div>
           </div>
           <div className="flex items-center gap-2 text-xs text-[var(--color-text-tertiary)]">
-            <span className="rounded-lg bg-[var(--color-bg-tertiary)] px-2.5 py-1 font-medium">{events.length} events</span>
-            <span className="rounded-lg bg-[var(--color-bg-tertiary)] px-2.5 py-1 font-medium">{tickets.length} tickets</span>
+            <span className="rounded bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] px-2.5 py-1 font-medium font-mono">{events.length} events</span>
+            <span className="rounded bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] px-2.5 py-1 font-medium font-mono">{tickets.length} tickets</span>
           </div>
         </div>
 
         {/* Message */}
         {message && (
-          <div className="mb-6 flex items-start gap-3 rounded-2xl bg-[var(--color-brand-subtle)] px-5 py-3.5 text-sm text-[var(--color-brand)] animate-slide-down">
+          <div className="mb-6 flex items-start gap-3 rounded border border-[var(--color-brand)]/30 bg-[var(--color-brand-subtle)] px-5 py-3.5 text-sm text-[var(--color-brand)]">
             <svg className="h-5 w-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
             </svg>
@@ -437,14 +436,14 @@ export function EventsPage() {
         )}
 
         {/* Tabs */}
-        <div className="mb-8 flex gap-1 rounded-2xl bg-[var(--color-bg-tertiary)] p-1">
+        <div className="mb-6 sm:mb-8 flex gap-1 rounded bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] p-1 overflow-x-auto">
           {(['events', 'tickets', 'create'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
+              className={`flex-1 rounded px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
                 activeTab === tab
-                  ? 'bg-[var(--color-card)] text-[var(--color-text)] shadow-soft border border-[var(--color-border)]'
+                  ? 'bg-[var(--color-card)] text-[var(--color-text)] border border-[var(--color-border)]'
                   : 'text-[var(--color-text-tertiary)] hover:text-[var(--color-text)]'
               }`}
             >
@@ -476,7 +475,7 @@ export function EventsPage() {
         {activeTab === 'tickets' && (
           <section>
             {tickets.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-[var(--color-border)] bg-[var(--color-card)] py-16 text-center animate-fade-in">
+              <div className="rounded-[8px] border border-dashed border-[var(--color-border)] bg-[var(--color-card)] py-16 text-center animate-fade-in">
                 <p className="text-lg font-medium text-[var(--color-text-secondary)]">No tickets yet</p>
                 <p className="text-sm text-[var(--color-text-tertiary)] mt-1.5">Go to All Events and mint one to see it here.</p>
               </div>

@@ -6,7 +6,7 @@ import {
   Networks,
   scValToNative,
   TransactionBuilder,
-  type xdr,
+  xdr,
 } from '@stellar/stellar-sdk';
 import { Server } from '@stellar/stellar-sdk/rpc';
 import { signTransaction } from '@stellar/freighter-api';
@@ -16,7 +16,10 @@ const RPC_URL = import.meta.env.VITE_SOROBAN_RPC_URL || 'https://soroban-testnet
 
 type ContractArgument =
   | { type: 'address'; value: string }
-  | { type: 'native'; value: boolean | number | bigint | string };
+  | { type: 'string'; value: string }
+  | { type: 'u32'; value: number }
+  | { type: 'u128'; value: number | bigint }
+  | { type: 'native'; value: boolean | number | bigint };
 
 /** Error returned when environment variables for contract IDs are missing. */
 export class MissingContractConfigError extends Error {
@@ -42,9 +45,19 @@ function configuredContractId(value: string | undefined, name: string): string {
 }
 
 function toScVal(argument: ContractArgument): xdr.ScVal {
-  return argument.type === 'address'
-    ? new Address(argument.value).toScVal()
-    : nativeToScVal(argument.value);
+  if (argument.type === 'address') {
+    return new Address(argument.value).toScVal();
+  }
+  if (argument.type === 'string') {
+    return xdr.ScVal.scvString(argument.value);
+  }
+  if (argument.type === 'u32') {
+    return nativeToScVal(argument.value, { type: 'u32' });
+  }
+  if (argument.type === 'u128') {
+    return nativeToScVal(argument.value, { type: 'u128' });
+  }
+  return nativeToScVal(argument.value);
 }
 
 export function getEventContractId(): string {
@@ -133,9 +146,9 @@ export async function submitEventCreation(options: {
     method: 'create_event',
     args: [
       { type: 'address', value: options.organizer },
-      { type: 'native', value: options.title },
-      { type: 'native', value: priceInStroops },
-      { type: 'native', value: options.totalSupply },
+      { type: 'string', value: options.title },
+      { type: 'u128', value: priceInStroops },
+      { type: 'u32', value: options.totalSupply },
     ],
     source: options.source,
   });
@@ -152,9 +165,9 @@ export async function submitPrimaryTicketPurchase(options: {
     contractId: getTicketContractId(),
     method: 'purchase_ticket',
     args: [
-      { type: 'native', value: options.eventId },
+      { type: 'u32', value: options.eventId },
       { type: 'address', value: options.buyer },
-      { type: 'native', value: options.metadata },
+      { type: 'string', value: options.metadata },
     ],
     source: options.source,
   });
@@ -170,7 +183,7 @@ export async function submitTicketResale(options: {
     contractId: getTicketContractId(),
     method: 'buy_listed_ticket',
     args: [
-      { type: 'native', value: options.ticketId },
+      { type: 'u32', value: options.ticketId },
       { type: 'address', value: options.buyer },
     ],
     source: options.source,
@@ -187,7 +200,7 @@ export async function submitOwnerCheckIn(options: {
     contractId: getTicketContractId(),
     method: 'use_ticket',
     args: [
-      { type: 'native', value: options.ticketId },
+      { type: 'u32', value: options.ticketId },
       { type: 'address', value: options.owner },
     ],
     source: options.source,
@@ -205,9 +218,9 @@ export async function submitTicketListing(options: {
     contractId: getTicketContractId(),
     method: 'list_for_resale',
     args: [
-      { type: 'native', value: options.ticketId },
+      { type: 'u32', value: options.ticketId },
       { type: 'address', value: options.seller },
-      { type: 'native', value: BigInt(options.salePrice) },
+      { type: 'u128', value: BigInt(options.salePrice) },
     ],
     source: options.source,
   });

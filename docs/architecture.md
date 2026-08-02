@@ -23,7 +23,7 @@ This avoids asking one browser wallet to sign as both seller and buyer.
 
 ## Real-time updates
 
-Contracts publish Soroban events for `event`, `mint`, `xfer`, `used`, `checkin`, `listed`, and `sold`. A production deployment should run an indexer that consumes these events from Soroban RPC, stores a queryable projection, and pushes updates to browser clients through WebSocket or Server-Sent Events. The frontend must treat the on-chain event/indexer result—not optimistic local state—as the source of truth.
+Contracts publish Soroban events for `event`, `mint`, `xfer`, `used`, `checkin`, `listed`, and `sold`. A production deployment should run an indexer that consumes these events from Soroban RPC, stores a queryable projection, and pushes updates to browser clients through WebSocket or Server-Sent Events. The frontend must treat on-chain event data over optimistic local state as the source of truth.
 
 ## Security boundaries
 
