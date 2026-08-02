@@ -118,7 +118,7 @@ impl EventContract {
 #[cfg(test)]
 mod test {
     use super::*;
-    use soroban_sdk::{testutils::Address as _, String as SorobanString};
+    use soroban_sdk::testutils::Address as _;
 
     #[test]
     fn create_and_read_event() {
@@ -129,14 +129,12 @@ mod test {
         let client = EventContractClient::new(&env, &contract_id);
 
         let organizer = Address::generate(&env);
-        client.initialize(&organizer).unwrap();
+        client.initialize(&organizer);
 
         let title = String::from_str(&env, "Launch Night");
-        let event_id = client
-            .create_event(&organizer, &title, &1000u128, &200u32)
-            .unwrap();
+        let event_id = client.create_event(&organizer, &title, &1000u128, &200u32);
 
-        let event = client.get_event(&event_id).unwrap();
+        let event = client.get_event(&event_id);
 
         assert_eq!(event.id, 1);
         assert_eq!(event.title, title);
@@ -152,8 +150,8 @@ mod test {
         let contract_id = env.register_contract(None, EventContract);
         let client = EventContractClient::new(&env, &contract_id);
 
-        let error = client.get_event(&999).unwrap_err();
-        assert_eq!(error, Error::EventNotFound);
+        let result = client.try_get_event(&999);
+        assert_eq!(result, Err(Ok(Error::EventNotFound)));
     }
 
     #[test]
@@ -164,19 +162,17 @@ mod test {
         let client = EventContractClient::new(&env, &contract_id);
         let organizer = Address::generate(&env);
         let buyer = Address::generate(&env);
-        client.initialize(&organizer).unwrap();
-        let event_id = client
-            .create_event(
-                &organizer,
-                &String::from_str(&env, "One seat"),
-                &1u128,
-                &1u32,
-            )
-            .unwrap();
+        client.initialize(&organizer);
+        let event_id = client.create_event(
+            &organizer,
+            &String::from_str(&env, "One seat"),
+            &1u128,
+            &1u32,
+        );
 
-        client.reserve_ticket(&event_id, &buyer).unwrap();
-        assert_eq!(client.get_event(&event_id).unwrap().sold_supply, 1u32);
-        let error = client.reserve_ticket(&event_id, &buyer).unwrap_err();
-        assert_eq!(error, Error::SoldOut);
+        client.reserve_ticket(&event_id, &buyer);
+        assert_eq!(client.get_event(&event_id).sold_supply, 1u32);
+        let result = client.try_reserve_ticket(&event_id, &buyer);
+        assert_eq!(result, Err(Ok(Error::SoldOut)));
     }
 }

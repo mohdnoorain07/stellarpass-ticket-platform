@@ -464,7 +464,8 @@ impl TicketContract {
 #[cfg(test)]
 mod test {
     use super::*;
-    use soroban_sdk::{testutils::Address as _, String as SorobanString};
+    use soroban_sdk::testutils::Address as _;
+    use stellarpass_royalty_contract::{RoyaltyContract, RoyaltyContractClient};
 
     #[test]
     fn mint_and_read_ticket() {
@@ -476,14 +477,12 @@ mod test {
 
         let admin = Address::generate(&env);
         let owner = Address::generate(&env);
-        client.initialize(&admin).unwrap();
+        client.initialize(&admin);
 
         let metadata = String::from_str(&env, "General Admission");
-        let ticket_id = client
-            .mint_ticket(&admin, &7u32, &owner, &metadata)
-            .unwrap();
+        let ticket_id = client.mint_ticket(&admin, &7u32, &owner, &metadata);
 
-        let ticket = client.get_ticket(&ticket_id).unwrap();
+        let ticket = client.get_ticket(&ticket_id);
         assert_eq!(ticket.id, 1);
         assert_eq!(ticket.event_id, 7u32);
         assert_eq!(ticket.owner, owner);
@@ -501,15 +500,13 @@ mod test {
 
         let admin = Address::generate(&env);
         let owner = Address::generate(&env);
-        client.initialize(&admin).unwrap();
+        client.initialize(&admin);
 
         let metadata = String::from_str(&env, "VIP");
-        let ticket_id = client
-            .mint_ticket(&admin, &10u32, &owner, &metadata)
-            .unwrap();
+        let ticket_id = client.mint_ticket(&admin, &10u32, &owner, &metadata);
 
-        client.use_ticket(&ticket_id, &owner).unwrap();
-        let ticket = client.get_ticket(&ticket_id).unwrap();
+        client.use_ticket(&ticket_id, &owner);
+        let ticket = client.get_ticket(&ticket_id);
         assert!(ticket.used);
     }
 
@@ -523,16 +520,14 @@ mod test {
 
         let admin = Address::generate(&env);
         let owner = Address::generate(&env);
-        client.initialize(&admin).unwrap();
+        client.initialize(&admin);
 
         let metadata = String::from_str(&env, "VIP");
-        let ticket_id = client
-            .mint_ticket(&admin, &10u32, &owner, &metadata)
-            .unwrap();
+        let ticket_id = client.mint_ticket(&admin, &10u32, &owner, &metadata);
 
-        client.use_ticket(&ticket_id, &owner).unwrap();
-        let error = client.use_ticket(&ticket_id, &owner).unwrap_err();
-        assert_eq!(error, Error::AlreadyUsed);
+        client.use_ticket(&ticket_id, &owner);
+        let result = client.try_use_ticket(&ticket_id, &owner);
+        assert_eq!(result, Err(Ok(Error::AlreadyUsed)));
     }
 
     #[test]
@@ -544,20 +539,18 @@ mod test {
         let client = TicketContractClient::new(&env, &contract_id);
         let admin = Address::generate(&env);
         let owner = Address::generate(&env);
-        client.initialize(&admin).unwrap();
-        let ticket_id = client
-            .mint_ticket(
-                &admin,
-                &10u32,
-                &owner,
-                &String::from_str(&env, "Gate ticket"),
-            )
-            .unwrap();
+        client.initialize(&admin);
+        let ticket_id = client.mint_ticket(
+            &admin,
+            &10u32,
+            &owner,
+            &String::from_str(&env, "Gate ticket"),
+        );
 
-        client.check_in_ticket(&ticket_id, &admin).unwrap();
-        assert!(client.get_ticket(&ticket_id).unwrap().used);
-        let error = client.check_in_ticket(&ticket_id, &admin).unwrap_err();
-        assert_eq!(error, Error::AlreadyUsed);
+        client.check_in_ticket(&ticket_id, &admin);
+        assert!(client.get_ticket(&ticket_id).used);
+        let result = client.try_check_in_ticket(&ticket_id, &admin);
+        assert_eq!(result, Err(Ok(Error::AlreadyUsed)));
     }
 
     #[test]
@@ -571,17 +564,13 @@ mod test {
         let admin = Address::generate(&env);
         let owner = Address::generate(&env);
         let new_owner = Address::generate(&env);
-        client.initialize(&admin).unwrap();
+        client.initialize(&admin);
 
         let metadata = String::from_str(&env, "Transferable");
-        let ticket_id = client
-            .mint_ticket(&admin, &12u32, &owner, &metadata)
-            .unwrap();
+        let ticket_id = client.mint_ticket(&admin, &12u32, &owner, &metadata);
 
-        client
-            .transfer_ticket(&ticket_id, &owner, &new_owner)
-            .unwrap();
-        let ticket = client.get_ticket(&ticket_id).unwrap();
+        client.transfer_ticket(&ticket_id, &owner, &new_owner);
+        let ticket = client.get_ticket(&ticket_id);
         assert_eq!(ticket.owner, new_owner);
     }
 
@@ -596,18 +585,14 @@ mod test {
         let admin = Address::generate(&env);
         let owner = Address::generate(&env);
         let new_owner = Address::generate(&env);
-        client.initialize(&admin).unwrap();
+        client.initialize(&admin);
 
         let metadata = String::from_str(&env, "Used Ticket");
-        let ticket_id = client
-            .mint_ticket(&admin, &13u32, &owner, &metadata)
-            .unwrap();
+        let ticket_id = client.mint_ticket(&admin, &13u32, &owner, &metadata);
 
-        client.use_ticket(&ticket_id, &owner).unwrap();
-        let error = client
-            .transfer_ticket(&ticket_id, &owner, &new_owner)
-            .unwrap_err();
-        assert_eq!(error, Error::TicketUsed);
+        client.use_ticket(&ticket_id, &owner);
+        let result = client.try_transfer_ticket(&ticket_id, &owner, &new_owner);
+        assert_eq!(result, Err(Ok(Error::TicketUsed)));
     }
 
     #[test]
@@ -626,36 +611,28 @@ mod test {
         let buyer = Address::generate(&env);
         let creator = Address::generate(&env);
         let platform = Address::generate(&env);
-        ticket_client.initialize(&admin).unwrap();
-        royalty_client.initialize(&admin).unwrap();
-        royalty_client
-            .configure(&admin, &creator, &platform, &8000u32, &2000u32)
-            .unwrap();
-        ticket_client
-            .set_royalty_contract(&royalty_contract_id)
-            .unwrap();
+        ticket_client.initialize(&admin);
+        royalty_client.initialize(&admin);
+        royalty_client.configure(&admin, &creator, &platform, &8000u32, &2000u32);
+        ticket_client.set_royalty_contract(&royalty_contract_id);
         let payment_token_id = env.register_stellar_asset_contract(admin.clone());
         let payment_token = token::StellarAssetClient::new(&env, &payment_token_id);
         payment_token.mint(&buyer, &1000i128);
-        ticket_client.set_payment_token(&payment_token_id).unwrap();
+        ticket_client.set_payment_token(&payment_token_id);
 
         let metadata = String::from_str(&env, "Resaleable");
-        let ticket_id = ticket_client
-            .mint_ticket(&admin, &14u32, &seller, &metadata)
-            .unwrap();
+        let ticket_id = ticket_client.mint_ticket(&admin, &14u32, &seller, &metadata);
 
-        ticket_client
-            .list_for_resale(&ticket_id, &seller, &1000u128)
-            .unwrap();
-        let (creator_amount, platform_amount) =
-            ticket_client.buy_listed_ticket(&ticket_id, &buyer).unwrap();
+        ticket_client.list_for_resale(&ticket_id, &seller, &1000u128);
+        let (creator_amount, platform_amount) = ticket_client.buy_listed_ticket(&ticket_id, &buyer);
 
-        let ticket = ticket_client.get_ticket(&ticket_id).unwrap();
+        let ticket = ticket_client.get_ticket(&ticket_id);
         assert_eq!(ticket.owner, buyer);
         assert_eq!(creator_amount, 800u128);
         assert_eq!(platform_amount, 200u128);
-        assert_eq!(payment_token.balance(&buyer), 0i128);
-        assert_eq!(payment_token.balance(&creator), 800i128);
-        assert_eq!(payment_token.balance(&platform), 200i128);
+        let token_client = token::Client::new(&env, &payment_token_id);
+        assert_eq!(token_client.balance(&buyer), 0i128);
+        assert_eq!(token_client.balance(&creator), 800i128);
+        assert_eq!(token_client.balance(&platform), 200i128);
     }
 }

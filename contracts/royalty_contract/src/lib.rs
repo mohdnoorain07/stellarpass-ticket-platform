@@ -131,9 +131,9 @@ mod test {
         let client = RoyaltyContractClient::new(&env, &contract_id);
 
         let admin = Address::generate(&env);
-        client.initialize(&admin).unwrap();
+        client.initialize(&admin);
 
-        let (creator, platform) = client.calculate_payouts(&1000u128).unwrap();
+        let (creator, platform) = client.calculate_payouts(&1000u128);
         assert_eq!(creator, 800);
         assert_eq!(platform, 200);
     }
@@ -148,19 +148,12 @@ mod test {
         let admin = Address::generate(&env);
         let creator = Address::generate(&env);
         let platform = Address::generate(&env);
-        client.initialize(&admin).unwrap();
+        client.initialize(&admin);
 
-        client
-            .configure(&admin, &creator, &platform, &7_500u32, &2_500u32)
-            .unwrap();
-        assert_eq!(
-            client.get_recipients().unwrap(),
-            (creator.clone(), platform.clone())
-        );
+        client.configure(&admin, &creator, &platform, &7_500u32, &2_500u32);
+        assert_eq!(client.get_recipients(), (creator.clone(), platform.clone()));
 
-        let error = client
-            .configure(&admin, &creator, &platform, &7_500u32, &2_400u32)
-            .unwrap_err();
-        assert_eq!(error, Error::InvalidConfig);
+        let result = client.try_configure(&admin, &creator, &platform, &7_500u32, &2_400u32);
+        assert_eq!(result, Err(Ok(Error::InvalidConfig)));
     }
 }
