@@ -1,5 +1,5 @@
 # StellarPass
-
+CI/CD Badge - [![CI](https://github.com/mohdnoorain07/stellarpass-ticket-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/mohdnoorain07/stellarpass-ticket-platform/actions/workflows/ci.yml)
 > **Decentralized event ticketing on the Stellar network using Soroban smart contracts.**
 
 Create events, mint verifiable tickets, transfer ownership, check in with QR codes, and settle secondary market royalties on-chain.
