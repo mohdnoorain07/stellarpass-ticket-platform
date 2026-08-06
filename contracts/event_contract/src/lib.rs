@@ -155,6 +155,54 @@ mod test {
     }
 
     #[test]
+    fn test_multiple_events() {
+        let env = Env::default();
+        env.mock_all_auths();
+
+        let contract_id = env.register_contract(None, EventContract);
+        let client = EventContractClient::new(&env, &contract_id);
+        let organizer = Address::generate(&env);
+        client.initialize(&organizer);
+
+        let first = client.create_event(
+            &organizer,
+            &String::from_str(&env, "First Night"),
+            &100u128,
+            &50u32,
+        );
+        let second = client.create_event(
+            &organizer,
+            &String::from_str(&env, "Second Night"),
+            &200u128,
+            &100u32,
+        );
+        let third = client.create_event(
+            &organizer,
+            &String::from_str(&env, "Third Night"),
+            &300u128,
+            &150u32,
+        );
+
+        // IDs are auto-incremented per event, mirroring the feedback-contract
+        // `test_multiple_feedbacks` pattern.
+        assert_eq!(first, 1);
+        assert_eq!(second, 2);
+        assert_eq!(third, 3);
+        assert_eq!(
+            client.get_event(&first).title,
+            String::from_str(&env, "First Night")
+        );
+        assert_eq!(
+            client.get_event(&second).title,
+            String::from_str(&env, "Second Night")
+        );
+        assert_eq!(
+            client.get_event(&third).title,
+            String::from_str(&env, "Third Night")
+        );
+    }
+
+    #[test]
     fn reservation_enforces_event_supply() {
         let env = Env::default();
         env.mock_all_auths();

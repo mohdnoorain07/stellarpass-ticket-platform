@@ -1,2 +1,10 @@
+# Windows-only. Applies only to the x86_64-pc-windows-gnu target; Linux/macOS
+# CI builds are unaffected.
 [target.x86_64-pc-windows-gnu]
-linker = "x86_64-w64-mingw32-gcc"
+# Machine-specific: point at a modern MinGW-w64 (here MSYS2). The old
+# C:\MinGW dlltool cannot create import libraries for recent rustc, and its
+# gcc overflows the DLL export ordinal limit for Soroban test binaries.
+linker = "C:/msys64/mingw64/bin/x86_64-w64-mingw32-gcc.exe"
+# Soroban contract test binaries are linked as DLLs on Windows; strip the
+# export table so mingw's ld does not overflow the ordinal limit.
+rustflags = ["-C", "link-arg=-Wl,--exclude-all-symbols"]

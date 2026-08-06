@@ -139,6 +139,24 @@ mod test {
     }
 
     #[test]
+    fn calculate_payouts_across_multiple_prices() {
+        let env = Env::default();
+        env.mock_all_auths();
+
+        let contract_id = env.register_contract(None, RoyaltyContract);
+        let client = RoyaltyContractClient::new(&env, &contract_id);
+
+        let admin = Address::generate(&env);
+        client.initialize(&admin);
+
+        // Default split is 80% creator / 20% platform across many sale sizes,
+        // mirroring the feedback-contract `test_multiple_feedbacks` pattern.
+        assert_eq!(client.calculate_payouts(&1000u128), (800, 200));
+        assert_eq!(client.calculate_payouts(&10_000u128), (8000, 2000));
+        assert_eq!(client.calculate_payouts(&250u128), (200, 50));
+    }
+
+    #[test]
     fn configures_recipients_and_rejects_invalid_share_total() {
         let env = Env::default();
         env.mock_all_auths();

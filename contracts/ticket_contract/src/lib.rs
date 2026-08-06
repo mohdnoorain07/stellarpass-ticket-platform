@@ -491,6 +491,53 @@ mod test {
     }
 
     #[test]
+    fn get_missing_ticket_returns_error() {
+        let env = Env::default();
+        let contract_id = env.register_contract(None, TicketContract);
+        let client = TicketContractClient::new(&env, &contract_id);
+
+        let result = client.try_get_ticket(&999);
+        assert_eq!(result, Err(Ok(Error::TicketNotFound)));
+    }
+
+    #[test]
+    fn mint_multiple_tickets_increments_ids() {
+        let env = Env::default();
+        env.mock_all_auths();
+
+        let contract_id = env.register_contract(None, TicketContract);
+        let client = TicketContractClient::new(&env, &contract_id);
+        let admin = Address::generate(&env);
+        let owner = Address::generate(&env);
+        client.initialize(&admin);
+
+        let first = client.mint_ticket(
+            &admin,
+            &1u32,
+            &owner,
+            &String::from_str(&env, "General Admission"),
+        );
+        let second = client.mint_ticket(
+            &admin,
+            &1u32,
+            &owner,
+            &String::from_str(&env, "General Admission"),
+        );
+        let third = client.mint_ticket(&admin, &1u32, &owner, &String::from_str(&env, "VIP"));
+
+        // Ticket IDs are auto-incremented, mirroring the feedback-contract
+        // `test_multiple_feedbacks` pattern.
+        assert_eq!(first, 1);
+        assert_eq!(second, 2);
+        assert_eq!(third, 3);
+        assert_eq!(
+            client.get_ticket(&third).metadata,
+            String::from_str(&env, "VIP")
+        );
+        assert_eq!(client.get_ticket(&first).used, false);
+    }
+
+    #[test]
     fn use_ticket_marks_it_used() {
         let env = Env::default();
         env.mock_all_auths();

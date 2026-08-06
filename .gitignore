@@ -28,3 +28,6 @@ Desktop.ini
 .env
 .env.local
 .env.*.local
+
+# Soroban test harness snapshots
+test_snapshots/
