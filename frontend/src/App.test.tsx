@@ -42,6 +42,11 @@ describe('StellarPass routes', () => {
   });
 
   it('rejects an invalid ticket code before a wallet transaction is attempted', async () => {
+    walletMocks.checkWalletConnection.mockResolvedValue({
+      isConnected: true,
+      publicKey: 'GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF',
+      error: null,
+    });
     renderAt('/check-in');
 
     const input = await screen.findByLabelText('Ticket Code');
@@ -51,5 +56,20 @@ describe('StellarPass routes', () => {
     fireEvent.click(button);
 
     expect(await screen.findByText('Enter a valid StellarPass ticket code.')).toBeInTheDocument();
+  });
+
+  it('hides the check-in panel from non-admin users', async () => {
+    walletMocks.checkWalletConnection.mockResolvedValue({
+      isConnected: true,
+      publicKey: 'GDANQLG4VQFO2XQ2QFGWAMKJKDEAOXBZMDAD6ZMRZOAEHBRI3Y5N2ONTSU',
+      error: null,
+    });
+    renderAt('/check-in');
+
+    expect(
+      await screen.findByText(/This panel is restricted to the ticket contract administrator/i)
+    ).toBeInTheDocument();
+    expect(screen.queryByLabelText('Ticket Code')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Confirm Gate Entry' })).not.toBeInTheDocument();
   });
 });

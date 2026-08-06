@@ -529,7 +529,6 @@ export function HomePage() {
                 <li><Link to="/" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-brand)] transition-colors">Home</Link></li>
                 <li><Link to="/events" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-brand)] transition-colors">Events</Link></li>
                 <li><Link to="/wallet" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-brand)] transition-colors">Wallet</Link></li>
-                <li><Link to="/check-in" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-brand)] transition-colors">Check-in</Link></li>
               </ul>
             </div>
 

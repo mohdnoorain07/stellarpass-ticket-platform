@@ -16,6 +16,8 @@ export function CheckInPage() {
     return () => scannerControls.current?.stop();
   }, []);
 
+  const isAdmin = wallet.isConnected && wallet.publicKey === getTicketAdminAddress();
+
   function stopScanner() {
     scannerControls.current?.stop();
     scannerControls.current = null;
@@ -60,17 +62,13 @@ export function CheckInPage() {
       setMessage('Enter a valid StellarPass ticket code.');
       return;
     }
-    if (!wallet.publicKey) {
-      setMessage('Connect the administrator Freighter wallet before checking in.');
+    if (!isAdmin) {
+      setMessage('Only the ticket administrator can check in tickets.');
       return;
     }
 
     try {
       const admin = getTicketAdminAddress();
-      if (wallet.publicKey !== admin) {
-        setMessage('The connected wallet is not the ticket administrator.');
-        return;
-      }
 
       setIsSubmitting(true);
       const result = await submitContractAction({
@@ -80,7 +78,7 @@ export function CheckInPage() {
           { type: 'native', value: ticketId },
           { type: 'address', value: admin },
         ],
-        source: wallet.publicKey,
+        source: wallet.publicKey!,
       });
       setMessage(result.ok ? `Ticket #${ticketId} checked in successfully.` : `Check-in failed. ${result.error}`);
       if (result.ok) {
@@ -112,6 +110,26 @@ export function CheckInPage() {
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  if (!isAdmin) {
+    return (
+      <main className="py-12 sm:py-16 px-4 sm:px-6">
+        <div className="mx-auto max-w-lg">
+          <div className="card-altius animate-slide-up text-center py-14 sm:py-16 px-6">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-warning-subtle)] border border-[var(--color-warning)]/30">
+              <svg className="h-6 w-6 text-[var(--color-warning)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+              </svg>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-[var(--color-text)] tracking-tight">Gate Check-in</h1>
+            <p className="mt-2 text-sm text-[var(--color-text-secondary)]">
+              This panel is restricted to the ticket contract administrator. Connect the admin Freighter wallet to access the gate scanner.
+            </p>
+          </div>
+        </div>
+      </main>
+    );
   }
 
   return (

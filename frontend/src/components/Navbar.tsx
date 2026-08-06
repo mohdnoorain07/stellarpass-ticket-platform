@@ -98,7 +98,6 @@ export const Navbar = memo(function Navbar() {
           {[
             { to: '/', label: 'Home' },
             { to: '/events', label: 'Events' },
-            { to: '/check-in', label: 'Check-in' },
             { to: '/wallet', label: 'Wallet' },
           ].map(({ to, label }) => (
             <NavLink
@@ -174,7 +173,6 @@ export const Navbar = memo(function Navbar() {
         <nav className="flex flex-col gap-1">
           <NavLink to="/" className={mobileLinkClass} onClick={() => setMobileMenuOpen(false)}>Home</NavLink>
           <NavLink to="/events" className={mobileLinkClass} onClick={() => setMobileMenuOpen(false)}>Events</NavLink>
-          <NavLink to="/check-in" className={mobileLinkClass} onClick={() => setMobileMenuOpen(false)}>Check-in</NavLink>
           <NavLink to="/wallet" className={mobileLinkClass} onClick={() => setMobileMenuOpen(false)}>Wallet</NavLink>
         </nav>
       </div>
