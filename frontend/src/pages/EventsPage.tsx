@@ -456,7 +456,7 @@ export function EventsPage() {
 
         {/* Events Tab */}
         {activeTab === 'events' && (
-          <div className="grid gap-8 lg:grid-cols-[1.3fr,0.7fr]">
+          <div className="grid items-start gap-8 lg:grid-cols-[1.3fr,0.7fr]">
             <section className="grid gap-5 md:grid-cols-2">
               {events.map((event) => (
                 <EventCard

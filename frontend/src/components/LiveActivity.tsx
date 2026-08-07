@@ -78,7 +78,7 @@ export function LiveActivity() {
 
   // Event list
   return (
-    <ul className="space-y-2">
+    <ul className="max-h-[260px] space-y-2 overflow-y-auto pr-1">
       {events.map((event) => (
         <li
           key={event.id}
