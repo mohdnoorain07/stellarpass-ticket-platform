@@ -93,41 +93,18 @@ _(Add mobile responsive UI, CI/CD pipeline, and test output screenshots here.)_
 
 > **Test output with 3+ passing tests** ✅ — real run, `cargo test --workspace`:
 
-```text
-Running unittests src\lib.rs (target\debug\deps\stellarpass_event_contract-bea4ac417a6078ab.exe)
 
-running 4 tests
-test test::get_missing_event_returns_error ... ok
-test test::create_and_read_event ... ok
-test test::reservation_enforces_event_supply ... ok
-test test::test_multiple_events ... ok
 
-test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+<img width="1202" height="839" alt="Screenshot 2026-08-08 121802" src="https://github.com/user-attachments/assets/500ec06c-cab6-4b61-bdb1-396b8a9a1d12" />
 
-Running unittests src\lib.rs (target\debug\deps\stellarpass_royalty_contract-d886ef13ff178686.exe)
 
-running 3 tests
-test test::calculates_royalty_split ... ok
-test test::calculate_payouts_across_multiple_prices ... ok
-test test::configures_recipients_and_rejects_invalid_share_total ... ok
 
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
 
-Running unittests src\lib.rs (target\debug\deps\stellarpass_ticket_contract-764c82681bf4002f.exe)
 
-running 9 tests
-test test::get_missing_ticket_returns_error ... ok
-test test::mint_and_read_ticket ... ok
-test test::use_ticket_marks_it_used ... ok
-test test::using_twice_returns_error ... ok
-test test::transfer_used_ticket_returns_error ... ok
-test test::transfer_ticket_updates_owner ... ok
-test test::administrator_can_check_in_ticket_once ... ok
-test test::mint_multiple_tickets_increments_ids ... ok
-test test::listed_resale_transfers_ownership_and_distributes_payment ... ok
 
-test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
-```
+
+
+
 
 > **Note:** captured from a local Windows run — binary hashes and paths vary by platform
 > (Linux CI produces no `.exe`). The three doc-test harnesses report `0 passed`.
