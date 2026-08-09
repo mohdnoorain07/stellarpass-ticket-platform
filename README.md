@@ -34,7 +34,7 @@ a GitHub Actions CI pipeline, and Vercel deployment configuration.
 
 | | |
 |---|---|
-| **Live deployed link** | → _(coming soon — deploying to Vercel)_ |
+| **Live deployed link** | stellarpass-ticket-platform.vercel.app |
 | **Demo video link** | → _(coming soon)_ |
 | **GitHub repository** | → https://github.com/mohdnoorain07/stellarpass-ticket-platform |
 
@@ -42,9 +42,10 @@ a GitHub Actions CI pipeline, and Vercel deployment configuration.
 
 | Contract | ID |
 |----------|----|
-| `VITE_EVENT_CONTRACT_ID` | `CBTDF6MLVMO6A6QCI2GS5KDABMQZI24DB2M7CYAWSASBK6JB4MTKJ6IP` |
-| `VITE_TICKET_CONTRACT_ID` | `CDRQWUNCR6Y2PRRXD5ZP7E7EHPEVON6XZ22KXIZVARHTCN5LEEX4N3WK` |
+|`VITE_EVENT_CONTRACT_ID` | `CB2VJVDIMGZ4IRMSCGM56AYC6EBWCYMLX62VJ6PYNWLIPH2H3OG2OPV7` |
+| `VITE_TICKET_CONTRACT_ID` | `CCIWDM4VQZU34BE44S5IDAGTV75QLBCE3MKLTEEDBJCAT3FPPIOH4CIL` |
 | `VITE_TICKET_ADMIN_ADDRESS` | `GDNCIK6JATAXQ2QFGWAMKJKDEAOXBZMDAD6ZMRZOAEHBRI3Y5N2ONTSU` |
+
 
 **On-chain interaction proof** — `create_event` via the admin wallet:
 
