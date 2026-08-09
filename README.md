@@ -57,7 +57,8 @@ a GitHub Actions CI pipeline, and Vercel deployment configuration.
 
 ## 📸 Screenshots
 
-_(Add mobile responsive UI, CI/CD pipeline, and test output screenshots here.)_
+ ![Uploading Screenshot 2026-08-06 172904.png…]()
+
 
 ---
 
