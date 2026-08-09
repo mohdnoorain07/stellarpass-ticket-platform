@@ -57,7 +57,7 @@ a GitHub Actions CI pipeline, and Vercel deployment configuration.
 
 ## 📸 Screenshots
 
- ![Uploading Screenshot 2026-08-06 172904.png…]()
+ <img width="1064" height="893" alt="Screenshot 2026-08-06 172904" src="https://github.com/user-attachments/assets/e05f0bdf-caee-43a2-bc9d-4e5740feb872" />
 
 
 ---
