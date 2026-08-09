@@ -16,6 +16,21 @@ import {
 import { starterEvents } from '../data/starterEvents';
 import type { EventItem, TicketItem } from '../types';
 
+/**
+ * Merges locally-stored events with the current on-chain demo events.
+ * Stale copies of the demo events (old ids 1/2 or older isOnChain:false
+ * drafts) are dropped so the demo cards always reflect the real contract
+ * events, while the user's own on-chain events are preserved.
+ */
+function mergeStoredEvents(stored: EventItem[]): EventItem[] {
+  const demoIds = new Set(starterEvents.map((event) => event.id));
+  const demoTitles = new Set(starterEvents.map((event) => event.title.toLowerCase()));
+  const kept = stored.filter(
+    (event) => !demoIds.has(event.id) && !demoTitles.has(event.title.toLowerCase()),
+  );
+  return [...starterEvents, ...kept];
+}
+
 const DEFAULT_FEED_ITEMS: FeedItem[] = [
   { id: 'f1', type: 'info', message: 'StellarPass smart contract listener initialized.', timestamp: new Date(Date.now() - 600000).toISOString() },
   { id: 'f2', type: 'event', message: 'Event "Launch Night" created on-chain by Nova Studios', timestamp: new Date(Date.now() - 400000).toISOString() },
@@ -49,7 +64,7 @@ export function EventsPage() {
   useEffect(() => {
     try {
       const storedEvents = window.localStorage.getItem('stellarpass-events');
-      if (storedEvents) setEvents(JSON.parse(storedEvents) as EventItem[]);
+      if (storedEvents) setEvents(mergeStoredEvents(JSON.parse(storedEvents) as EventItem[]));
       const storedTickets = window.localStorage.getItem('stellarpass-tickets');
       if (storedTickets) setTickets(JSON.parse(storedTickets) as TicketItem[]);
       const storedFeed = window.localStorage.getItem('stellarpass-feed');
@@ -217,6 +232,11 @@ export function EventsPage() {
     }
     const event = events.find((item) => item.id === eventId);
     if (!event) return;
+
+    if (!event.isOnChain) {
+      setMessage(`"${event.title}" is a local draft — publish it on-chain first (Host Event tab → enable "publish on-chain") to mint tickets.`);
+      return;
+    }
 
     setIsSubmitting(true);
     setMessage(`Preparing wallet signing for ${event.title}...`);
