@@ -21,15 +21,15 @@ On-chain interaction proof — `create_event` via admin wallet:
 - [x] Public GitHub repository: `mohdnoorain07/stellarpass-ticket-platform`
 - [x] README with complete documentation
 - [x] 10+ meaningful commits on `main`
-- [ ] Live demo link (Vercel / Netlify)
+- [x] Live demo link (Vercel / Netlify)
 - [x] Contract deployment addresses (see table above)
 - [x] Transaction hash for contract interaction (see above)
 - [x] CI/CD pipeline passing — [GitHub Actions](https://github.com/mohdnoorain07/stellarpass-ticket-platform/actions)
 - [x] 41 passing frontend tests + 16 Rust contract tests (CI)
-- [ ] Mobile responsive UI screenshot
-- [ ] CI/CD pipeline screenshot
-- [ ] Test output screenshot
-- [ ] Demo video link (1–2 minutes)
+- [x] Mobile responsive UI screenshot
+- [x] CI/CD pipeline screenshot
+- [x] Test output screenshot
+- [x] Demo video link (1–2 minutes)
 
 ### Delivery flow
 
