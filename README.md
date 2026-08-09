@@ -34,7 +34,7 @@ a GitHub Actions CI pipeline, and Vercel deployment configuration.
 
 | | |
 |---|---|
-| **Live deployed link** | [Live demo](https://stellarpass-ticket-platform.vercel.app) |
+| **Live deployed link** | [Live Deployed Link](https://stellarpass-ticket-platform.vercel.app) |
 | **Demo video link** | → _(coming soon)_ |
 | **GitHub repository** | → https://github.com/mohdnoorain07/stellarpass-ticket-platform |
 
